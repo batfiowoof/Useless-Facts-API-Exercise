@@ -10,7 +10,7 @@ const API_BASE_URL = "https://uselessfacts.jsph.pl/api/v2/facts";
 // Middleware за JSON
 app.use(express.json());
 
-// Пример: Асинхронна функция за извличане на случаен факт
+// Асинхронна функция за извличане на случаен факт
 async function fetchRandomFact() {
   try {
     const response = await axios.get(`${API_BASE_URL}/random`);
@@ -21,7 +21,18 @@ async function fetchRandomFact() {
   }
 }
 
-// Пример: Ендпойнт за получаване на случаен факт
+// Асинхронна функция за извличане на днешния факт
+async function fetchTodaysFact() {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/today`);
+    return response.data.text;
+  } catch (error) {
+    console.error("Грешка при извличане на днешния факт:", error);
+    throw new Error("Неуспешно извличане на данните");
+  }
+}
+
+// Ендпойнт за получаване на случаен факт
 app.get("/random-fact", async (req, res) => {
   try {
     const fact = await fetchRandomFact();
@@ -31,14 +42,14 @@ app.get("/random-fact", async (req, res) => {
   }
 });
 
-// TODO: Напишете асинхронна функция, която ще извлича днешния факт от API
-async function fetchTodaysFact() {
-  // Използвайте axios.get() за извличане на данни от `${API_BASE_URL}/today`
-}
-
-// TODO: Създайте ендпойнт '/todays-fact', който връща днешния факт
+// Ендпойнт за получаване на днешния факт
 app.get("/todays-fact", async (req, res) => {
-  // Извикайте fetchTodaysFact() и върнете резултата като JSON
+  try {
+    const fact = await fetchTodaysFact();
+    res.json({ fact });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // Старт на сървъра
