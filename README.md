@@ -1,7 +1,52 @@
 # Node.js & Axios API Integration
 
 ## Описание
-Тази задача има за цел да запознае учениците с използването на **axios** за изпращане на HTTP заявки в Node.js и Express. Учениците ще изградят малък уеб сървър, който комуникира с външно API, за да получава безполезни факти.
+Тази задача има за цел да ви запознае с използването на **axios** за изпращане на HTTP заявки в Node.js и Express.Ще изградите малък уеб сървър, който комуникира с външно API, за да получава безполезни факти.
+
+## Какво е Axios?
+### Какво представлява Axios?
+Axios е **популярен HTTP клиент за JavaScript**, който позволява лесно изпращане на HTTP заявки. Той поддържа **Promise API** и работи както в браузъра, така и в Node.js.
+
+### Основни предимства на Axios:
+- Поддържа асинхронно програмиране с `async/await`
+- Позволява изпращане на **GET, POST, PUT, DELETE** заявки
+- Автоматично преобразува JSON отговори
+- Поддържа прихващане (interceptors) за обработка на заявки и отговори
+
+### Инсталация на Axios:
+За да използвате Axios в Node.js, трябва първо да го инсталирате:
+```bash
+npm install axios
+```
+
+### Изпращане на GET заявка с Axios:
+```javascript
+const axios = require('axios');
+
+async function fetchData() {
+    try {
+        const response = await axios.get('https://uselessfacts.jsph.pl/api/v2/facts/random');
+        console.log(response.data.text); // Извежда получения факт
+    } catch (error) {
+        console.error('Грешка при извличане на данни:', error);
+    }
+}
+
+fetchData();
+```
+
+### Обработка на грешки с Axios
+Axios позволява лесно прихващане на грешки чрез `try...catch`:
+```javascript
+async function fetchData() {
+    try {
+        const response = await axios.get('https://some-invalid-url.com');
+        console.log(response.data);
+    } catch (error) {
+        console.error('Възникна грешка:', error.response ? error.response.status : error.message);
+    }
+}
+```
 
 ## Изисквания
 - Node.js (инсталирайте от [официалния сайт](https://nodejs.org/))
