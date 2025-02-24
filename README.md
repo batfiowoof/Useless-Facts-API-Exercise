@@ -64,7 +64,7 @@ async function fetchData() {
 ## Стартиране на сървъра
 Изпълнете следната команда, за да стартирате сървъра:
 ```bash
-node app.js
+node index.js
 ```
 
 Сървърът ще бъде достъпен на **http://localhost:3000**.
